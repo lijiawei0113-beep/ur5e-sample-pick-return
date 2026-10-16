@@ -177,6 +177,36 @@ T_flange_camera = T_flange_tcp × T_tcp_camera
 
 Here, `T_A_B` maps coordinates from frame B into frame A; translation is in metres.
 
+### Calibration Result
+
+The estimated hand–eye transformation maps camera coordinates into the active TCP frame:
+
+```text
+T_tcp_camera =
+[
+    [-0.999792362, -0.017278033,  0.010802881,  0.010020657],
+    [ 0.017295985, -0.999849180,  0.001570571,  0.074889656],
+    [ 0.010774116,  0.001757091,  0.999940414,  0.058478193],
+    [ 0.000000000,  0.000000000,  0.000000000,  1.000000000]
+]
+```
+
+The coordinate transformation is:
+
+```text
+p_tcp = T_tcp_camera × p_camera
+```
+
+Points are expressed in homogeneous coordinates. The upper-left 3 × 3 block represents rotation; the last column represents translation in metres.
+
+The translation vector is approximately `[10.021, 74.890, 58.478] mm`.
+
+With zero active TCP during calibration, the TCP frame coincides with the flange frame, and this matrix is also `T_flange_camera`.
+
+[Download the full-precision calibration matrix](step2_handeye_calibration/T_tcp_camera.txt)
+
+This result corresponds to the camera mounting used in this experiment. Recalibrate if the camera mounting changes. Positioning accuracy is evaluated separately through validation and physical touch tests.
+
 ## Step 3 — Hand–Eye Verification
 
 This stage checks the combined camera, hand–eye, robot, and probe geometry by moving a mounted probe to a selected chessboard corner.
