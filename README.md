@@ -468,3 +468,33 @@ These files are saved inside `step5_moving_workbench_follow/`.
 The interface video shows green-target detection, tracking information, and the stability timer during workbench movement.
 
 The physical demonstration shows the UR5e operating with the movable green workbench during sample handling.
+
+### Experiment 1 — Comparison of Three Centre-Estimation Methods
+
+Three methods were compared at 15 tray positions: A1, A5, A10, B3, B6, B9, C1, C5, C10, D2, D6, D9, E1, E5, and E10.
+
+Each position was measured five times. The statistics below were calculated across the 15 position-level mean XY errors.
+
+#### Methods
+
+| Method | Centre estimation |
+| --- | --- |
+| Global connected-component centre | Use the coordinate-wise median of valid depth points in each detected component, expressed in Base XY. |
+| Global single-frame circle fitting | Fit a circle using a single global-view frame, without repositioning the camera. |
+| Centred refinement | Move the camera above the sample, capture fresh RGB-D data, and fit a robust circle to the local top-surface outline in Base XY. A bounds-based centre is used if the fit is unreliable. |
+
+#### Results
+
+| Method | Valid positions | Mean (mm) | Median (mm) | RMSE (mm) | Maximum (mm) |
+| --- | --- | --- | --- | --- | --- |
+| Global connected-component centre | 15/15 | 2.820 | 2.867 | 2.952 | 4.069 |
+| Global single-frame circle fitting | 15/15 | 2.182 | 2.126 | 2.275 | 3.551 |
+| Centred refinement | 15/15 | **1.243** | **1.369** | **1.289** | **1.747** |
+
+<img src="assets/exp1_overall_metrics.png" alt="Comparison of three sample-centre estimation methods" width="900">
+
+Centred refinement reduced the mean error by **55.9%** compared with global connected-component estimation and **43.0%** compared with global single-frame circle fitting.
+
+It also reduced the side-minus-middle mean error gap from **0.935 mm** and **0.800 mm** to **0.243 mm**. The middle region covers columns 4–7; the side regions cover columns 1–3 and 8–10.
+
+The results support the two-stage workflow: **global detection to locate samples, followed by centred refinement before grasping**.
