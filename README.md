@@ -1,8 +1,10 @@
-# UR5e Vision-Guided Sample Pick and Return
+# UR5e Robotic Sample Handling for Geological Analysis
 
-A vision-guided sample handling project using a **UR5e robotic arm**, an **Orbbec Gemini 305 RGB-D camera**, and an **OnRobot RG2 gripper**.
+This project develops automated sample handling and positioning for geological-material testing in a laboratory.
 
-The system detects cylindrical samples in a tray, refines their centre positions from a centred camera view, transfers them to a workbench, and returns them to their original tray positions. Custom 3D-printed gripper fingertips improve sample centring during grasping.
+Using a UR5e robotic arm, an Orbbec Gemini 305 RGB-D camera, and an OnRobot RG2 gripper, the system locates cylindrical samples in a tray, transfers them to an analysis workbench, and returns them to their original tray positions.
+
+The application goal is to automate repetitive sample loading, positioning, and return, allowing researchers to focus on scientific measurements and interpretation. This repository provides the robotic handling module for integration with geological analysis equipment.
 
 ## Preview
 
@@ -498,3 +500,40 @@ Centred refinement reduced the mean error by **55.9%** compared with global conn
 It also reduced the side-minus-middle mean error gap from **0.935 mm** and **0.800 mm** to **0.243 mm**. The middle region covers columns 4–7; the side regions cover columns 1–3 and 8–10.
 
 The results support the two-stage workflow: **global detection to locate samples, followed by centred refinement before grasping**.
+
+## Experiment 2 — Original vs. Self-Centring Fingertips
+
+This experiment compares the sample-placement error obtained with the original RG2 fingertips and custom self-centring fingertips.
+
+The error is the XY distance between the sample centre and the workbench centre after placement.
+
+### Fingertip Designs
+
+| Original RG2 fingertips | Custom self-centring fingertips |
+| :---: | :---: |
+| <img src="assets/old_rg2_fingertips.png" alt="Original RG2 fingertips" width="280"> | <img src="assets/new_self_centering_fingertips.png" alt="Custom self-centring fingertips" width="280"> |
+
+The custom fingertips guide the cylindrical sample towards the gripper centre during closing.
+
+Original fingertip illustration: OnRobot RG2 datasheet, v1.8, page 5. Custom fingertip image: preview extracted from the supplied 3MF printing file.
+
+### Results
+
+Reported summary statistics for 100 placements per fingertip design:
+
+| Metric | Original fingertips | Self-centring fingertips |
+| --- | --- | --- |
+| Mean error | 1.887 mm | **0.759 mm** |
+| Median error | 1.762 mm | **0.707 mm** |
+| Standard deviation | 0.709 mm | **0.383 mm** |
+| Minimum–maximum | 0.640–3.202 mm | **0.100–1.900 mm** |
+| Error ≤ 1 mm | 8/100 (8%) | **71/100 (71%)** |
+| Error > 2 mm | 40/100 (40%) | **0/100 (0%)** |
+
+The reported mean error and standard deviation were **59.8%** and **46.0%** lower, respectively, with the self-centring fingertips, indicating improved placement accuracy and consistency.
+
+### Application Requirement
+
+Using **XY placement error < 2 mm** as the project-specific acceptance criterion for the intended geological-sample testing station, the new fingertips achieved a maximum reported error of **1.900 mm**.
+
+The reported results therefore meet this positioning criterion for the intended sample-testing workflow.
