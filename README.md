@@ -366,6 +366,13 @@ The program saves its outputs inside `step4_sample_pick_and_return/`:
 
 The implementation includes bounded camera recovery and RTDE Receive reconnection. These mechanisms do not guarantee that every interruption can be recovered automatically.
 
+### Demonstration Videos
+
+- [Download one complete pick-and-return cycle (MP4)](https://github.com/lijiawei0113-beep/ur5e-sample-pick-return/releases/download/demo-v1/pick_return_one_cycle.mp4)
+- [Download the extended-operation video at 60× speed (MP4)](https://github.com/lijiawei0113-beep/ur5e-sample-pick-return/releases/download/demo-v1/pick_return_60x.mp4)
+
+The first video shows one complete sample-handling cycle. The second provides a 60× time-lapse view of extended operation.
+
 ## Step 5 — Moving Workbench Follow
 
 This stage adds real-time XY following of a green workbench to the sample-handling sequence.
