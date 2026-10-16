@@ -216,4 +216,175 @@ The sequence is:
 
 Session images, target information, motion plans, and execution records are saved under `step3_handeye_verification/handeye_touch_runs/`.
 
-Inspect and record the tip-to-corner discrepancy. Reaching the commanded pose alone does not quantify the positioning error, and chessboard reprojection RMSE is not a hand–eye positioning error.
+## Step 4 — Sample Pick and Return
+
+This stage detects cylindrical samples in the tray, refines their centre positions, transfers them to the calibrated workbench centre, and returns them to their original tray points.
+
+The gripper stays closed during the workbench dwell. The sample is not released and re-grasped at the workbench.
+
+### Configuration
+
+Install the grasping fingertips and check the following settings:
+
+| File | Settings |
+| --- | --- |
+| `robot.py` | Robot IP, grasping TCP, payload, and basic motion parameters. |
+| `vision.py` | Camera serial number, intrinsics, distortion coefficients, and `T_FLANGE_CAMERA`. |
+| `pick_place_return.py` | Capture settings, grasp and placement heights, motion overrides, and RG2 communication. |
+
+The probe geometry used in Step 3 and the grasping TCP used here describe different tool configurations. Match the settings to the installed hardware.
+
+Update `T_FLANGE_CAMERA` using the hand–eye calibration for the current camera mounting. The matrix maps camera coordinates into the flange frame.
+
+### RG2 Controller Program
+
+This stage uses `/programs/rg2_command.urp` and its associated OnRobot installation on the robot controller.
+
+The Python code sends commands through input integer register 18 and reads acknowledgements from output integer register 18:
+
+| Action | Input command | In-progress ACK | Completion ACK |
+| --- | --- | --- | --- |
+| Open | 1 | 101 | 1 |
+| Close | 2 | 102 | 2 |
+
+Command 0 is idle. The completion acknowledgement must be written after the corresponding gripper action finishes.
+
+The robot-side program and installation are not included in this repository.
+
+### Calibrate the Workbench
+
+Keep the empty workbench top and part of the supporting table visible. Close Orbbec Viewer, then run from the repository root:
+
+```powershell
+python step4_sample_pick_and_return/calibrate_workbench.py
+```
+
+This calibration reads RGB-D data without commanding robot motion.
+
+Inspect the reported centre and the saved diagnostic image:
+
+| Output | Description |
+| --- | --- |
+| `workbench_pose.json` | Workbench top centre and calibration information. |
+| `workbench_nonfollow_place_result.png` | Detection and centre preview. |
+
+The picking program reads this saved centre. Keep the workbench fixed during operation and recalibrate after moving it.
+
+### Run Pick and Return
+
+Prepare the samples in the tray, start with the workbench empty, and place the robot at the intended starting/Home pose. Enable Remote Control mode and close other robot-control programs.
+
+```powershell
+python step4_sample_pick_and_return/pick_place_return.py
+```
+
+Each cycle performs the following sequence:
+
+1. Move to the tray overview pose and detect the current samples.
+2. Centre the camera above a selected sample.
+3. Capture fresh RGB-D frames and refine the sample centre.
+4. Grasp the sample and transfer it to the workbench.
+5. Hold it at the calibrated placement pose with the gripper closed.
+6. Return it to its original tray point and open the gripper.
+7. Continue with the remaining samples.
+
+Direct execution repeats complete cycles continuously until stopped or interrupted by an error.
+
+### Run Records
+
+The program saves its outputs inside `step4_sample_pick_and_return/`:
+
+| Output | Description |
+| --- | --- |
+| `all_samples_result.json` | Sample detections, planned poses, stages, and execution results. |
+| `all_samples_result.png` | Tray overview with detected sample annotations. |
+| `rtde_recovery_checkpoint.json` | Checkpoint information used by the recovery logic. |
+
+The implementation includes bounded camera recovery and RTDE Receive reconnection. These mechanisms do not guarantee that every interruption can be recovered automatically.
+
+## Step 5 — Moving Workbench Follow
+
+This stage adds real-time XY following of a green workbench to the sample-handling sequence.
+
+During following, the robot holds the sample above the workbench with fixed TCP height and orientation. After the workbench is judged stationary for 3 seconds, the program calculates the final centre, performs the workbench dwell, and returns the sample to the tray.
+
+### Files and Dependencies
+
+| File | Purpose |
+| --- | --- |
+| `calibrate_green_workbench.py` | Measure the green workbench centre and top height. |
+| `pick_follow_return.py` | Pick samples, follow the workbench, dwell, and return samples. |
+
+Step 5 imports `pick_place_return.py`, `vision.py`, and `robot.py` from Step 4.
+
+Keep `step4_sample_pick_and_return` and `step5_moving_workbench_follow` beside each other with their existing names.
+
+### Green Workbench Configuration
+
+The supplied calibration is configured for:
+
+| Parameter | Configuration |
+| --- | --- |
+| Nominal green top dimensions | 30 × 30 mm |
+| Accepted height above the supporting table | 240–290 mm |
+| Workbench motion during following | Horizontal XY translation |
+| Top height during following | Fixed at the calibrated value |
+
+Calibration uses `GREEN_HSV_LOWER` and `GREEN_HSV_UPPER` in `calibrate_green_workbench.py`.
+
+Live tracking uses `GREEN_LOWER` and `GREEN_UPPER` in `pick_follow_return.py`. Adjust the relevant range if the green surface is not detected under the actual lighting.
+
+### Calibrate the Green Workbench
+
+Keep the empty green top and part of its supporting table visible, then run:
+
+```powershell
+python step5_moving_workbench_follow/calibrate_green_workbench.py
+```
+
+The program first detects the workbench. If the initial view is sufficient, it takes a fresh refinement without moving. Otherwise, it repositions the camera for a perpendicular view and retraces the planned path afterwards.
+
+Inspect these outputs inside `step5_moving_workbench_follow/`:
+
+| Output | Description |
+| --- | --- |
+| `workbench_pose.json` | Initial search centre and calibrated top height. |
+| `workbench_calibration.png` | Green-top detection and centre preview. |
+
+This calibration is saved separately from Step 4.
+
+### Run Live Following
+
+Prepare the tray samples and the robot starting pose, then run:
+
+```powershell
+python step5_moving_workbench_follow/pick_follow_return.py
+```
+
+No command-line arguments are required.
+
+The sequence is:
+
+1. Detect the tray samples and refine the selected sample centre.
+2. Grasp the sample and move to the high observation pose.
+3. Detect the green top and follow its horizontal motion.
+4. Hold XY motion when the workbench is judged to have stopped.
+5. Confirm a 3-second stability window and estimate the final centre.
+6. Move to the workbench centre and dwell with the gripper closed.
+7. Return the sample to its original tray point and open the gripper.
+8. Process the remaining samples and return to the starting joint pose.
+
+The follow stage uses a 60 mm lateral target-to-TCP offset to keep the held sample away from the camera's view of the green top.
+
+The enlarged preview displays the target marker, XY error, follow state, and stability timer. Press **Esc** to stop the follow stage.
+
+Unlike Step 4's continuous mode, Step 5 processes the detected samples once.
+
+### Run Records
+
+| Output | Description |
+| --- | --- |
+| `green_workbench_follow_run.json` | Sample-handling stages, follow results, and execution outcome. |
+| `green_workbench_follow_latest.png` | Latest saved follow preview. |
+
+These files are saved inside `step5_moving_workbench_follow/`.
