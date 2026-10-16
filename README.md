@@ -258,6 +258,28 @@ The sequence is:
 
 Session images, target information, motion plans, and execution records are saved under `step3_handeye_verification/handeye_touch_runs/`.
 
+### Verification Demonstration
+
+#### Target Selection
+
+<img src="assets/handeye_target_selection.png" alt="Chessboard corner detection and target selection" width="850">
+
+The camera detects the 48 inner corners of the chessboard. The selected target, corner #47 in this example, is highlighted with a red circle. Its position is transformed into the robot base frame using the estimated board pose and hand–eye transformation.
+
+#### Probe Positioning
+
+<img src="assets/handeye_touch_result.jpg" alt="Close-up of the probe tip at the chessboard target" width="750">
+
+After target selection, the robot moves the mounted probe to the calculated target pose. The close-up shows the final probe-tip position relative to the chessboard corner.
+
+This provides a qualitative check of the complete vision-to-robot positioning process. Numerical positioning accuracy is evaluated separately using measured tip-to-target errors.
+
+#### Demonstration Video
+
+[Watch the hand–eye verification video](assets/handeye_touch_test.mp4)
+
+The video shows the robot repositioning and approaching the selected chessboard target with the mounted probe.
+
 ## Step 4 — Sample Pick and Return
 
 This stage detects cylindrical samples in the tray, refines their centre positions, transfers them to the calibrated workbench centre, and returns them to their original tray points.
