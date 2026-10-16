@@ -473,7 +473,7 @@ The physical demonstration shows the UR5e operating with the movable green workb
 
 Three methods were compared at 15 tray positions: A1, A5, A10, B3, B6, B9, C1, C5, C10, D2, D6, D9, E1, E5, and E10.
 
-Each position was measured five times. The statistics below were calculated across the 15 position-level mean XY errors.
+Each position was measured 10 times. The statistics below were calculated across the 15 position-level mean XY errors.
 
 ### Methods
 
