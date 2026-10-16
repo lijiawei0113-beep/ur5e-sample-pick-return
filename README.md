@@ -16,6 +16,20 @@ The system detects cylindrical samples in a tray, refines their centre positions
 - 3D-printed verification probe and custom gripper fingertips
 - Calibration chessboard, sample tray, and workbench
 
+## Experimental Setup
+
+### System Overview
+
+<img src="assets/system_setup.jpg" alt="UR5e sample handling setup" width="900">
+
+The experimental setup consists of the UR5e robotic arm, a wrist-mounted RGB-D camera, an RG2 gripper, a sample tray, and an elevated workbench. The tray holds the cylindrical samples, while the workbench provides the target surface for sample transfer.
+
+### Camera and Gripper
+
+<img src="assets/camera_gripper.jpg" alt="Wrist-mounted Gemini 305 camera and RG2 gripper" width="450">
+
+The Gemini 305 camera is mounted near the robot wrist using a 3D-printed bracket, forming an eye-in-hand configuration. The RG2 gripper is fitted with custom 3D-printed fingertips for grasping cylindrical samples.
+
 ## Repository Structure
 
 | Directory | Description |
