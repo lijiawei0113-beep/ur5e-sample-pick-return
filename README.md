@@ -97,8 +97,6 @@ The camera is mounted on the robot, while the chessboard remains fixed during ca
 
 <img src="assets/calibration_board.png" alt="Calibration chessboard with 6 by 8 inner corners" width="360">
 
-[Download the original chessboard PDF](assets/calibration_board.pdf)
-
 | Parameter | Configuration |
 | --- | --- |
 | Board layout | 7 × 9 squares |
@@ -172,8 +170,6 @@ This stage checks the combined camera, hand–eye, robot, and probe geometry by 
 ### Verification Probe
 
 <img src="assets/verification_probe.png" alt="Slicer preview of the supplied verification probe part" width="420">
-
-[Download the supplied probe printing file (.gcode.3mf)](assets/verification_probe.gcode.3mf)
 
 The attachment is a sliced Bambu Studio printing file. It contains the print instructions and a preview, rather than an editable STL mesh. The preview shows the supplied printed part; it does not show the complete mounted tool assembly.
 
