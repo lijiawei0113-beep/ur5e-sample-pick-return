@@ -469,13 +469,13 @@ The interface video shows green-target detection, tracking information, and the 
 
 The physical demonstration shows the UR5e operating with the movable green workbench during sample handling.
 
-### Experiment 1 — Comparison of Three Centre-Estimation Methods
+## Experiment 1 — Comparison of Three Centre-Estimation Methods
 
 Three methods were compared at 15 tray positions: A1, A5, A10, B3, B6, B9, C1, C5, C10, D2, D6, D9, E1, E5, and E10.
 
 Each position was measured five times. The statistics below were calculated across the 15 position-level mean XY errors.
 
-#### Methods
+### Methods
 
 | Method | Centre estimation |
 | --- | --- |
@@ -483,7 +483,7 @@ Each position was measured five times. The statistics below were calculated acro
 | Global single-frame circle fitting | Fit a circle using a single global-view frame, without repositioning the camera. |
 | Centred refinement | Move the camera above the sample, capture fresh RGB-D data, and fit a robust circle to the local top-surface outline in Base XY. A bounds-based centre is used if the fit is unreliable. |
 
-#### Results
+### Results
 
 | Method | Valid positions | Mean (mm) | Median (mm) | RMSE (mm) | Maximum (mm) |
 | --- | --- | --- | --- | --- | --- |
