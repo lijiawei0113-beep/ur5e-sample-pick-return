@@ -459,3 +459,12 @@ Unlike Step 4's continuous mode, Step 5 processes the detected samples once.
 | `green_workbench_follow_latest.png` | Latest saved follow preview. |
 
 These files are saved inside `step5_moving_workbench_follow/`.
+
+### Demonstration Videos
+
+- [Download the live-follow interface video (MP4)](https://github.com/lijiawei0113-beep/ur5e-sample-pick-return/releases/download/demo-v1/workbench_follow_interface.mp4)
+- [Download the physical robot demonstration (MP4)](https://github.com/lijiawei0113-beep/ur5e-sample-pick-return/releases/download/demo-v1/workbench_follow_robot.mp4)
+
+The interface video shows green-target detection, tracking information, and the stability timer during workbench movement.
+
+The physical demonstration shows the UR5e operating with the movable green workbench during sample handling.
