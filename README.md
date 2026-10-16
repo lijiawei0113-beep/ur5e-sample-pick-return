@@ -42,7 +42,7 @@ The Gemini 305 camera is mounted near the robot wrist using a 3D-printed bracket
 | [Step 4 — Sample Pick and Return](step4_sample_pick_and_return/) | Sample detection, workbench calibration, and pick-and-return cycles. |
 | [Step 5 — Moving Workbench Follow](step5_moving_workbench_follow/) | Green workbench calibration and live XY following. |
 
-The instructions below cover Steps 1–3.
+The instructions below cover Steps 1–5.
 
 ## Software Environment
 
