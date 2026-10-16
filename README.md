@@ -276,9 +276,9 @@ This provides a qualitative check of the complete vision-to-robot positioning pr
 
 #### Demonstration Video
 
-[Watch the hand–eye verification video](assets/handeye_touch_test.mp4)
+[Download the original hand–eye verification video (MP4, 11.7 MB)](https://github.com/lijiawei0113-beep/ur5e-sample-pick-return/raw/refs/heads/main/assets/handeye_touch_test.mp4)
 
-The video shows the robot repositioning and approaching the selected chessboard target with the mounted probe.
+The original video shows the robot approaching the selected chessboard target with the mounted probe.
 
 ## Step 4 — Sample Pick and Return
 
