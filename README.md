@@ -203,8 +203,6 @@ The translation vector is approximately `[10.021, 74.890, 58.478] mm`.
 
 With zero active TCP during calibration, the TCP frame coincides with the flange frame, and this matrix is also `T_flange_camera`.
 
-[Download the full-precision calibration matrix](step2_handeye_calibration/T_tcp_camera.txt)
-
 This result corresponds to the camera mounting used in this experiment. Recalibrate if the camera mounting changes. Positioning accuracy is evaluated separately through validation and physical touch tests.
 
 ## Step 3 — Hand–Eye Verification
