@@ -490,12 +490,12 @@ Each position was measured 10 times. The statistics below were calculated across
 | Method | Valid positions | Mean (mm) | Median (mm) | RMSE (mm) | Maximum (mm) |
 | --- | --- | --- | --- | --- | --- |
 | Global connected-component centre | 15/15 | 2.820 | 2.867 | 2.952 | 4.069 |
-| Global single-frame circle fitting | 11/15 | 2.182 | 2.126 | 2.275 | 3.551 |
+| Global single-frame circle fitting | 11/15 | 2.085 | 2.126 | 2.275 | 3.551 |
 | Centred refinement | 15/15 | **1.243** | **1.369** | **1.289** | **1.747** |
 
 <img src="assets/exp1_overall_metrics.png" alt="Comparison of three sample-centre estimation methods" width="900">
 
-Centred refinement reduced the mean error by **55.9%** compared with global connected-component estimation and **43.0%** compared with global single-frame circle fitting.
+Centred refinement reduced the mean error by **55.9%** compared with global connected-component estimation and **40.4%** compared with global single-frame circle fitting.
 
 It also reduced the side-minus-middle mean error gap from **0.935 mm** and **0.800 mm** to **0.243 mm**. The middle region covers columns 4–7; the side regions cover columns 1–3 and 8–10.
 
