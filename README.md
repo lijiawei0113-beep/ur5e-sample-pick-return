@@ -6,6 +6,8 @@ Using a UR5e robotic arm, an Orbbec Gemini 305 RGB-D camera, and an OnRobot RG2 
 
 The application goal is to automate repetitive sample loading, positioning, and return, allowing researchers to focus on scientific measurements and interpretation. This repository provides the robotic handling module for integration with geological analysis equipment.
 
+[Download Paper (PDF)](./gmj648_Jiawei Li_Project.pdf)
+
 ## Preview
 
 ![UR5e workflow preview](ur5e_pick_place_v3.gif)
